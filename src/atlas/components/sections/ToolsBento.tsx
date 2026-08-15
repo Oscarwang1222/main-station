@@ -62,187 +62,144 @@ export function ToolsBento() {
         </div>
 
         <div className="mt-16 grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-5">
-          {/* MIND — large left tile */}
-          <motion.div
-            id="mind"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-10% 0px' }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="md:col-span-7 md:row-span-2"
-          >
-            <SpotlightCard
-              accent="mind"
-              href={products[0].domain}
-              className="h-full"
+          {/* LEFT COLUMN: MIND (large) + ARENA stacked */}
+          <div className="grid grid-cols-1 gap-4 md:col-span-7 md:gap-5">
+            {/* MIND — large tile */}
+            <motion.div
+              id="mind"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-10% 0px' }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="flex h-full flex-col justify-between p-8 md:p-10">
-                <div>
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-eyebrow text-mute">/ {products[0].index}</span>
-                    <span className="flex items-center gap-2 font-mono text-eyebrow text-accent-mind">
-                      <span className="h-1.5 w-1.5 rounded-full bg-accent-mind" />
-                      ONLINE
-                    </span>
-                  </div>
-                  <h3 className="mt-12 font-display text-[clamp(40px,6vw,80px)] font-light leading-none tracking-[-0.04em]">
-                    {products[0].name}
-                  </h3>
-                  <p className="mt-4 max-w-md font-mono text-eyebrow text-mute">
-                    {products[0].tag} · ai.oscarstudio.cn
-                  </p>
-                </div>
-                <div className="mt-12">
-                  <p className="text-[18px] leading-7 text-body">
-                    {products[0].headline}
-                  </p>
-                  <p className="mt-3 text-[15px] leading-7 text-mute">
-                    {products[0].body}
-                  </p>
-                  <div className="mt-6 flex flex-wrap gap-2">
-                    {products[0].chips.map((c) => (
-                      <span
-                        key={c}
-                        className={cn(
-                          'rounded-tile border px-3 py-1 font-mono text-[11px] uppercase tracking-[1.2px]',
-                          accentBorder[products[0].accent],
-                          accentText[products[0].accent],
-                        )}
-                      >
-                        {c}
+              <SpotlightCard accent="mind" href={products[0].domain} className="h-full">
+                <div className="flex h-full flex-col justify-between p-8 md:p-10">
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-eyebrow text-mute">/ {products[0].index}</span>
+                      <span className="flex items-center gap-2 font-mono text-eyebrow text-accent-mind">
+                        <span className="h-1.5 w-1.5 rounded-full bg-accent-mind" />
+                        ONLINE
                       </span>
-                    ))}
+                    </div>
+                    <h3 className="mt-12 font-display text-[clamp(40px,6vw,80px)] font-light leading-none tracking-[-0.04em]">
+                      {products[0].name}
+                    </h3>
+                    <p className="mt-4 max-w-md font-mono text-eyebrow text-mute">
+                      {products[0].tag} · ai.oscarstudio.cn
+                    </p>
                   </div>
-                </div>
-                <NeuralArt />
-              </div>
-            </SpotlightCard>
-          </motion.div>
-
-          {/* LABS — small right top */}
-          <motion.div
-            id="labs"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-10% 0px' }}
-            transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="md:col-span-5"
-          >
-            <SmallCard product={products[1]} />
-          </motion.div>
-
-          {/* CANVAS — small right bottom */}
-          <motion.div
-            id="canvas"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-10% 0px' }}
-            transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="md:col-span-5"
-          >
-            <SmallCard product={products[2]} />
-          </motion.div>
-
-          {/* ARENA — full width, restored 4+4+4 layout with board art */}
-          <motion.div
-            id="arena"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-10% 0px' }}
-            transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="md:col-span-12"
-          >
-            <SpotlightCard accent="arena" href={products[3].domain}>
-              <div className="grid grid-cols-1 gap-6 p-8 md:grid-cols-12 md:gap-8 md:p-10">
-                <div className="md:col-span-4">
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-eyebrow text-mute">/ {products[3].index}</span>
-                    <span className="flex items-center gap-2 font-mono text-eyebrow text-accent-arena">
-                      <span className="h-1.5 w-1.5 rounded-full bg-accent-arena" />
-                      ONLINE
-                    </span>
+                  <div className="mt-12">
+                    <p className="text-[18px] leading-7 text-body">
+                      {products[0].headline}
+                    </p>
+                    <p className="mt-3 text-[15px] leading-7 text-mute">
+                      {products[0].body}
+                    </p>
+                    <div className="mt-6 flex flex-wrap gap-2">
+                      {products[0].chips.map((c) => (
+                        <span
+                          key={c}
+                          className={cn(
+                            'rounded-tile border px-3 py-1 font-mono text-[11px] uppercase tracking-[1.2px]',
+                            accentBorder[products[0].accent],
+                            accentText[products[0].accent],
+                          )}
+                        >
+                          {c}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                  <h3 className="mt-8 font-display text-[clamp(40px,5vw,72px)] font-light leading-none tracking-[-0.04em]">
-                    {products[3].name}
-                  </h3>
-                  <p className="mt-4 font-mono text-eyebrow text-mute">
-                    {products[3].tag} · games.oscarstudio.cn
-                  </p>
+                  <NeuralArt />
                 </div>
-                <div className="md:col-span-4">
-                  <p className="text-[17px] leading-7 text-body">{products[3].headline}</p>
-                  <p className="mt-3 text-[14px] leading-7 text-mute">{products[3].body}</p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {products[3].chips.map((c) => (
-                      <span
-                        key={c}
-                        className={cn(
-                          'rounded-tile border border-accent-arena/40 px-3 py-1 font-mono text-[11px] uppercase tracking-[1.2px] text-accent-arena',
-                        )}
-                      >
-                        {c}
+              </SpotlightCard>
+            </motion.div>
+
+            {/* ARENA — full-bleed tile inside left column */}
+            <motion.div
+              id="arena"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-10% 0px' }}
+              transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <SpotlightCard accent="arena" href={products[3].domain} className="h-full">
+                <div className="grid h-full grid-cols-1 gap-6 p-8 md:grid-cols-7 md:gap-6 md:p-9">
+                  <div className="md:col-span-3">
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-eyebrow text-mute">/ {products[3].index}</span>
+                      <span className="flex items-center gap-2 font-mono text-eyebrow text-accent-arena">
+                        <span className="h-1.5 w-1.5 rounded-full bg-accent-arena" />
+                        ONLINE
                       </span>
-                    ))}
+                    </div>
+                    <h3 className="mt-6 font-display text-[clamp(36px,4.5vw,64px)] font-light leading-none tracking-[-0.04em]">
+                      {products[3].name}
+                    </h3>
+                    <p className="mt-3 font-mono text-eyebrow text-mute">
+                      {products[3].tag} · games.oscarstudio.cn
+                    </p>
+                  </div>
+                  <div className="md:col-span-2">
+                    <p className="text-[15px] leading-6 text-body">{products[3].headline}</p>
+                    <p className="mt-2 text-[13px] leading-6 text-mute">{products[3].body}</p>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {products[3].chips.map((c) => (
+                        <span
+                          key={c}
+                          className={cn(
+                            'rounded-tile border border-accent-arena/40 px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-[1.2px] text-accent-arena',
+                          )}
+                        >
+                          {c}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="flex items-end justify-end md:col-span-2">
+                    <Board />
                   </div>
                 </div>
-                <div className="flex items-end justify-end md:col-span-4">
-                  <Board />
-                </div>
-              </div>
-            </SpotlightCard>
-          </motion.div>
+              </SpotlightCard>
+            </motion.div>
+          </div>
 
-          {/* KIT — slim full-width banner below ARENA */}
-          <motion.div
-            id="kit"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-10% 0px' }}
-            transition={{ duration: 0.7, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="md:col-span-12"
-          >
-            <SpotlightCard accent="kit" href={products[4].domain}>
-              <div className="grid grid-cols-1 items-center gap-6 p-6 md:grid-cols-12 md:gap-8 md:p-7">
-                <div className="md:col-span-3">
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-eyebrow text-mute">/ {products[4].index}</span>
-                    <span className="flex items-center gap-2 font-mono text-eyebrow text-accent-kit">
-                      <span className="h-1.5 w-1.5 rounded-full bg-accent-kit" />
-                      ONLINE
-                    </span>
-                  </div>
-                  <h3 className="mt-5 font-display text-[clamp(32px,3.6vw,48px)] font-light leading-none tracking-[-0.04em]">
-                    {products[4].name}
-                  </h3>
-                  <p className="mt-3 font-mono text-eyebrow text-mute">
-                    {products[4].tag} · tools.oscarstudio.cn
-                  </p>
-                </div>
-                <div className="md:col-span-6">
-                  <p className="text-[16px] leading-7 text-body">{products[4].headline}</p>
-                  <p className="mt-2 text-[14px] leading-7 text-mute">{products[4].body}</p>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {products[4].chips.map((c) => (
-                      <span
-                        key={c}
-                        className={cn(
-                          'rounded-tile border border-accent-kit/40 px-3 py-1 font-mono text-[11px] uppercase tracking-[1.2px] text-accent-kit',
-                        )}
-                      >
-                        {c}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <div className="flex items-end justify-end md:col-span-3">
-                  <div className="font-mono text-eyebrow text-mute">
-                    open <span className="text-ink">→</span>
-                    <div className="mt-1 text-ink">tools.oscarstudio.cn</div>
-                  </div>
-                </div>
-              </div>
-            </SpotlightCard>
-          </motion.div>
+          {/* RIGHT COLUMN: LABS + CANVAS + KIT stacked */}
+          <div className="grid grid-cols-1 gap-4 md:col-span-5 md:gap-5">
+            {/* LABS */}
+            <motion.div
+              id="labs"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-10% 0px' }}
+              transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <SmallCard product={products[1]} />
+            </motion.div>
+
+            {/* CANVAS */}
+            <motion.div
+              id="canvas"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-10% 0px' }}
+              transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <SmallCard product={products[2]} />
+            </motion.div>
+
+            {/* KIT — fifth product, same SmallCard style */}
+            <motion.div
+              id="kit"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-10% 0px' }}
+              transition={{ duration: 0.7, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <SmallCard product={products[4]} />
+            </motion.div>
+          </div>
         </div>
 
         <div className="mt-16 flex flex-wrap items-center justify-between gap-4">
