@@ -2,10 +2,39 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5" />
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>Oscar Studio</title>
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="https://ai.oscarstudio.cn/opilot.css" />
+    <script>
+      // 渲染前应用主题（深 / 浅），避免闪烁
+      (function() {
+        try {
+          var t = localStorage.getItem('oscar-theme');
+          var resolved;
+          if (t === 'light' || t === 'dark') {
+            resolved = t;
+          } else {
+            // system 或未设置：跟随系统
+            resolved = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          document.documentElement.setAttribute('data-theme', resolved);
+        } catch (e) { /* ignore */ }
+      })();
+
+      // 渲染前应用主页主题（classic / atlas），避免闪烁
+      // 默认 atlas（新用户），用户可在 settings 切换并会缓存到 localStorage。
+      (function() {
+        try {
+          var ht = localStorage.getItem('oscar-home-theme');
+          if (ht !== 'classic' && ht !== 'atlas') ht = 'atlas';
+          document.documentElement.setAttribute('data-home-theme', ht);
+        } catch (e) { /* ignore */ }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

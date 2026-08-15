@@ -7,13 +7,15 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "deploy": "gh-pages -d dist",
+    "deploy": "bash ../sync-site.sh main-station /www/wwwroot/oscarstudio.cn",
     "predeploy": "npm run build"
   },
   "dependencies": {
-    "@samasante/liquid-glass": "^0.1.1",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "framer-motion": "^12.0.0",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.5.4"
   },
   "devDependencies": {
     "@types/react": "^19.0.0",
@@ -21,6 +23,9 @@
     "@vitejs/plugin-react": "^4.3.4",
     "gh-pages": "^6.3.0",
     "typescript": "~5.7.2",
-    "vite": "^6.0.5"
+    "vite": "^6.0.5",
+    "tailwindcss": "^3.4.14",
+    "postcss": "^8.4.47",
+    "autoprefixer": "^10.4.20"
   }
 }

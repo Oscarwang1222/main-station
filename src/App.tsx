@@ -1,12 +1,15 @@
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import ToolSection from './components/ToolSection';
 import Footer from './components/Footer';
 import BackToTop from './components/BackToTop';
 import { useUserBackground } from './lib/useUserBackground';
-import { useGlassConfig } from './lib/useUserGlassConfig';
-import { initWebGLGlass, destroyWebGLGlass } from './lib/webglGlass';
+import { useHomeTheme } from './hooks/useHomeTheme';
+
+// Atlas（crazy/3 实验主题）整棵子树懒加载。
+// 没选 Atlas 的用户首屏不会下载 framer-motion 和那 ~110kb JS。
+const AtlasApp = lazy(() => import('./atlas/AtlasApp'));
 
 function useExternalScripts() {
   useEffect(() => {
@@ -21,29 +24,45 @@ function useExternalScripts() {
   }, []);
 }
 
-function useBrowserClass() {
-  const gc = useGlassConfig();
+/** 把 user-button.js 生成的 "登录/注册" 按钮改名为 "登录" */
+function useShortenedLoginButton() {
   useEffect(() => {
-    // 用 feature detection 代替 UA 嗅探：Safari 自 9 起支持
-    // `-webkit-backdrop-filter`，但 @samasante/liquid-glass 在不支持
-    // `backdrop-filter` 的浏览器里需要回落到 WebGL canvas 渲染折射。
-    // 同时检查 unprefixed 与 webkit 形式，避免漏判。
-    const supportsBD = (): boolean => {
-      if (typeof CSS === 'undefined' || !CSS.supports) return false;
-      return CSS.supports('backdrop-filter', 'blur(1px)')
-        || CSS.supports('-webkit-backdrop-filter', 'blur(1px)');
+    const shorten = () => {
+      const btn = document.querySelector<HTMLAnchorElement>('.login-register-btn');
+      if (btn && btn.textContent && btn.textContent.includes('注册')) {
+        btn.textContent = '登录';
+      }
     };
-    if (supportsBD()) return;
-    document.body.classList.add('no-lg-refraction');
-    initWebGLGlass(gc);
-    return () => destroyWebGLGlass();
-  }, [gc]);
+    shorten();
+    const observer = new MutationObserver(shorten);
+    observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+    return () => observer.disconnect();
+  }, []);
 }
 
-export default function App() {
-  useExternalScripts();
-  useUserBackground();
-  useBrowserClass();
+/** Atlas 加载期间的占位，避免整页闪白 */
+function AtlasLoading() {
+  return (
+    <div
+      style={{
+        minHeight: '100vh',
+        background: '#0a0a0a',
+        color: '#7d8187',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontFamily: 'Inter, system-ui, sans-serif',
+        fontSize: 14,
+        letterSpacing: '1.2px',
+        textTransform: 'uppercase',
+      }}
+    >
+      Loading Atlas…
+    </div>
+  );
+}
+
+function ClassicTree() {
   return (
     <>
       <Navbar />
@@ -67,12 +86,12 @@ export default function App() {
         external
       />
       <ToolSection
-        id="html-ppt"
-        icon="📊"
-        titleKey="pptTitle"
-        descKey="pptDesc"
-        actionKey="pptAction"
-        href="https://ppt.oscarstudio.cn"
+        id="tools"
+        icon="🧰"
+        titleKey="toolsTitle"
+        descKey="toolsDesc"
+        actionKey="toolsAction"
+        href="https://tools.oscarstudio.cn"
         external
       />
       <ToolSection
@@ -84,8 +103,35 @@ export default function App() {
         href="https://games.oscarstudio.cn"
         external
       />
+      <ToolSection
+        id="html-ppt"
+        icon="📊"
+        titleKey="pptTitle"
+        descKey="pptDesc"
+        actionKey="pptAction"
+        href="https://ppt.oscarstudio.cn"
+        external
+      />
       <Footer />
       <BackToTop />
     </>
   );
+}
+
+export default function App() {
+  useExternalScripts();
+  useShortenedLoginButton();
+  const [homeTheme] = useHomeTheme();
+  // useUserBackground 内部已感知 homeTheme === 'atlas'，会自动跳过 userBgLayer
+  useUserBackground(homeTheme);
+
+  if (homeTheme === 'atlas') {
+    return (
+      <Suspense fallback={<AtlasLoading />}>
+        <AtlasApp />
+      </Suspense>
+    );
+  }
+
+  return <ClassicTree />;
 }
